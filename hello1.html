@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MySite - Responsive Navigation with CSS Grid</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  /* Reset & base styles */
+  *,:before,:after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #121212;
+    color: #fff;
+    line-height: 1.6;
+  }
+
+  /* Navbar with CSS Grid */
+  nav.navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(20, 20, 20, 0.95);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    padding: 1rem 2rem;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+  }
+
+  .logo {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #00adb5;
+    user-select: none;
+    cursor: default;
+  }
+
+  ul.nav-links {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    justify-content: end;
+  }
+
+  ul.nav-links li {
+    position: relative;
+  }
+
+  ul.nav-links li a {
+    text-decoration: none;
+    color: #eee;
+    font-weight: 500;
+    padding: 0.4rem 0.6rem;
+    border-bottom: 3px solid transparent;
+    display: inline-block;
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
+    cursor: pointer;
+  }
+
+  ul.nav-links li a:hover,
+  ul.nav-links li a:focus,
+  ul.nav-links li a.active {
+    color: #00adb5;
+    border-bottom-color: #00adb5;
+    outline: none;
+  }
+
+  ul.submenu {
+    position: absolute;
+    top: 2.8rem;
+    left: 0;
+    background: #222;
+    border-radius: 6px;
+    display: none;
+    grid-template-columns: 1fr;
+    min-width: 140px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    z-index: 10;
+  }
+
+  ul.submenu li a {
+    padding: 0.6rem 1rem;
+    border-bottom: none;
+    display: block;
+    color: #ddd;
+  }
+
+  ul.submenu li a:hover,
+  ul.submenu li a:focus {
+    background: #00adb5;
+    color: #121212;
+  }
+
+  ul.nav-links li:hover > ul.submenu,
+  ul.nav-links li:focus-within > ul.submenu {
+    display: grid;
+  }
+
+  .hamburger {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #00adb5;
+    user-select: none;
+  }
+
+  /* Content area with CSS Grid for layout */
+  main.content {
+    max-width: 900px;
+    margin: 100px auto 2rem;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  main.content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #00adb5;
+  }
+
+  main.content p,
+  main.content ul,
+  main.content li {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: #ddd;
+  }
+
+  main.content ul {
+    padding-left: 1.5rem;
+  }
+
+  form.contact-form {
+    background: #222;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    max-width: 500px;
+  }
+
+  form.contact-form label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: #00adb5;
+  }
+
+  form.contact-form input,
+  form.contact-form textarea {
+    width: 100%;
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    border: none;
+    font-size: 1rem;
+    background: #121212;
+    color: #eee;
+  }
+
+  form.contact-form textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  form.contact-form button {
+    background: #00adb5;
+    color: #121212;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+
+  form.contact-form button:hover,
+  form.contact-form button:focus {
+    background: #019cae;
+    outline: none;
+  }
+
+  /* Responsive adjustments with media queries */
+  @media (max-width: 768px) {
+    nav.navbar {
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      padding: 1rem;
+    }
+    ul.nav-links {
+      grid-column: 1 / -1;
+      grid-template-columns: 1fr;
+      gap: 0;
+      background: rgba(10,10,10,0.95);
+      margin-top: 0.5rem;
+      border-radius: 8px;
+      display: none;
+      justify-content: start;
+    }
+    ul.nav-links.show {
+      display: grid;
+    }
+    ul.nav-links li {
+      padding: 1rem;
+      text-align: left;
+    }
+    ul.nav-links li a {
+      font-size: 1.25rem;
+      border-bottom: none;
+      display: block;
+    }
+    ul.submenu {
+      position: static;
+      background: none;
+      box-shadow: none;
+      grid-template-columns: 1fr;
+      padding-left: 1rem;
+      display: none;
+    }
+    ul.submenu.show {
+      display: grid;
+    }
+    ul.nav-links li:hover > ul.submenu,
+    ul.nav-links li:focus-within > ul.submenu {
+      display: none;
+    }
+    .hamburger {
+      display: block;
+    }
+  }
+
+  /* Hide all content sections by default */
+  .page-section {
+    display: none;
+  }
+
+  /* Show active content */
+  .page-section.active {
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="Main Navigation">
+  <div class="logo">MySite</div>
+  <div class="hamburger" id="hamburger" aria-label="Toggle menu" tabindex="0" role="button" aria-expanded="false">&#9776;</div>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#" data-page="home" class="active" tabindex="0">Home</a></li>
+    <li><a href="#" data-page="about" tabindex="0">About</a></li>
+    <li>
+      <a href="#" id="services-link" aria-haspopup="true" aria-expanded="false" tabindex="0">Services ▾</a>
+      <ul class="submenu" id="services-submenu" aria-label="Services Submenu">
+        <li><a href="#" data-page="services" tabindex="0">Web Design</a></li>
+        <li><a href="#" data-page="services" tabindex="0">Development</a></li>
+        <li><a href="#" data-page="services" tabindex="0">SEO</a></li>
+      </ul>
+    </li>
+    <li><a href="#" data-page="contact" tabindex="0">Contact</a></li>
+  </ul>
+</nav>
+
+<main class="content" role="main">
+
+  <section id="home" class="page-section active" tabindex="0">
+    <h1>Welcome to MySite</h1>
+    <p>We create beautiful, responsive websites using CSS Grid and media queries.</p>
+    <p>Explore our About, Services, and Contact pages to learn more.</p>
+  </section>
+
+  <section id="about" class="page-section" tabindex="0">
+    <h1>About Us</h1>
+    <p>Welcome to MySite! We specialize in delivering modern web design and development solutions to help your business thrive online.</p>
+    <p>Our team is dedicated to creating responsive, user-friendly websites with cutting-edge technologies.</p>
+    <p>We believe in quality, creativity, and clear communication to ensure your project exceeds expectations.</p>
+  </section>
+
+  <section id="services" class="page-section" tabindex="0">
+    <h1>Our Services</h1>
+    <p>We offer a wide range of services to help your business grow:</p>
+    <ul>
+      <li><strong>Web Design:</strong> Creating stunning, responsive designs.</li>
+      <li><strong>Development:</strong> Robust front-end and back-end coding.</li>
+      <li><strong>SEO:</strong> Optimize your website to rank higher in search results.</li>
+    </ul>
+  </section>
+
+  <section id="contact" class="page-section" tabindex="0">
+    <h1>Contact Us</h1>
+    <p>Have questions? Reach out to us!</p>
+
+    <form class="contact-form" action="#" method="POST" novalidate>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Your full name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required />
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="Your message here..." required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+</main>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('nav-links');
+
+  hamburger.addEventListener('click', () => {
+    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', !isExpanded);
+    navLinks.classList.toggle('show');
+  });
+
+  hamburger.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      hamburger.click();
+    }
+  });
+
+  const servicesLink = document.getElementById('services-link');
+  const servicesSubmenu = document.getElementById('services-submenu');
+
+  servicesLink.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      const expanded = servicesLink.getAttribute('aria-expanded') === 'true';
+      servicesLink.setAttribute('aria-expanded', !expanded);
+      servicesSubmenu.classList.toggle('show');
+    }
+  });
+
+  servicesLink.addEventListener('keydown', (e) => {
+    if ((e.key === 'Enter' || e.key === ' ') && window.innerWidth <= 768) {
+      e.preventDefault();
+      servicesLink.click();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      navLinks.classList.remove('show');
+      hamburger.setAttribute('aria-expanded', 'false');
+      servicesSubmenu.classList.remove('show');
+      servicesLink.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Page navigation logic
+  const links = document.querySelectorAll('ul.nav-links a[data-page]');
+  const sections = document.querySelectorAll('.page-section');
+
+  links.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const targetPage = link.getAttribute('data-page');
+
+      // Hide all sections
+      sections.forEach(section => section.classList.remove('active'));
+      // Show the target section
+      const targetSection = document.getElementById(targetPage);
+      if(targetSection) {
+        targetSection.classList.add('active');
+        targetSection.focus();
+      }
+
+      // Update active class on nav links
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+
+      // Close mobile menu after click
+      if (window.innerWidth <= 768) {
+        navLinks.classList.remove('show');
+        hamburger.setAttribute('aria-expanded', 'false');
+        servicesSubmenu.classList.remove('show');
+        servicesLink.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
